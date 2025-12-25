@@ -34,7 +34,7 @@ containerSecurityContext:
 
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 7655
   annotations: {}
   loadBalancerIP: ""

@@ -1,0 +1,57 @@
+{
+	"name": "Pulse Development Container",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest"
+		}
+	},
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+	],
+	"runArgs": [
+		"--privileged",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt=seccomp=unconfined"
+	],
+	"postCreateCommand": "bash .devcontainer/post-create.sh",
+	"remoteUser": "vscode",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"golang.go",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"ms-vscode.vscode-json",
+				"redhat.vscode-yaml",
+				"eamodio.gitlens",
+				"ms-azuretools.vscode-docker"
+			],
+			"settings": {
+				"go.useLanguageServer": true,
+				"go.gopath": "/go",
+				"go.goroot": "/usr/local/go",
+				"go.toolsManagement.checkForUpdates": "local",
+				"go.testTimeout": "30s",
+				"files.eol": "\n"
+			}
+		}
+	},
+	"forwardPorts": [
+		7655
+	],
+	"portsAttributes": {
+		"7655": {
+			"label": "Pulse Server",
+			"onAutoForward": "notify"
+		}
+	}
+}
+
+
